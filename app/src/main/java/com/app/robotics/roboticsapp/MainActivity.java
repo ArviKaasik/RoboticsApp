@@ -1,5 +1,6 @@
 package com.app.robotics.roboticsapp;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ToggleButton;
+import android.widget.CompoundButton;
+
+import java.io.Console;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +31,33 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        final HttpRequest request = new HttpRequest();
+        ToggleButton toggle = (ToggleButton) findViewById(R.id.toggBtn);
+        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            request.SendSwitchRequest(true);
+                        }
+                    });
+
+                } else {
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            request.SendSwitchRequest(false);
+                        }
+                    });
+                    //System.out.println(request.SendRquest(false));
+                }
+            }
+        });
+
+
+
     }
 
     @Override

@@ -9,12 +9,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SeekBar;
 import android.widget.ToggleButton;
 import android.widget.CompoundButton;
 
 import java.io.Console;
 
 public class MainActivity extends AppCompatActivity {
+
+    private HttpRequest request;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final HttpRequest request = new HttpRequest();
+        request = new HttpRequest();
         ToggleButton toggle = (ToggleButton) findViewById(R.id.toggBtn);
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -55,8 +58,28 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        final SeekBar seeker = (SeekBar) findViewById(R.id.seeker);
+        seeker.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                SendRequest(seeker.getProgress());
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
 
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) { }
+        });
+    }
 
+    private void SendRequest(final int x) {
+        System.out.println("Send Request - x: " + x);
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                    request.SendSeekerRequest(x);
+            }
+        });
 
     }
 

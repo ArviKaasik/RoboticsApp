@@ -14,19 +14,25 @@ public class HttpRequest {
 
     public  HttpURLConnection connection = null;
 
-    public String SendSwitchRequest (boolean OnOff){
+
+
+    public String SendSeekerRequest (int x) {
+
+        //Create connection
+        String request = "/update_seeker?x=" + x;
+
         try {
-            //Create connection
-            String request = "";
-
-            if (OnOff) {
-                request = "/update_LED?x=1";
-            } else {
-                request = "/update_LED?x=0";
-            }
             //urli asemele peab sisestama nutiroboti IP:PORT
-            URL url = new URL("http://192.168.1.103:8080" + request);
+            URL url = new URL("http://192.168.1.64:8080" + request);
+            return PostRequest(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    private String PostRequest (URL url) {
+        try {
             connection = (HttpURLConnection) url.openConnection();
 
             connection.setRequestMethod("POST");
@@ -38,8 +44,6 @@ public class HttpRequest {
 
             DataOutputStream wr = new DataOutputStream (
                     connection.getOutputStream());
-            wr.writeBytes(request);
-            System.out.println(request);
             wr.close();
 
             //Get Response
@@ -66,4 +70,22 @@ public class HttpRequest {
         }
     }
 
+    public String SendSwitchRequest (boolean OnOff){
+            //Create connection
+            String request = "";
+
+            if (OnOff) {
+                request = "/update_LED?x=1";
+            } else {
+                request = "/update_LED?x=0";
+            }
+        try {
+            //urli asemele peab sisestama nutiroboti IP:PORT
+            URL url = new URL("http://192.168.1.64:8080" + request);
+            return PostRequest(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

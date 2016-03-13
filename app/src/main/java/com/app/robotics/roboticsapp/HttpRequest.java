@@ -12,18 +12,29 @@ import java.net.URL;
  */
 public class HttpRequest {
 
-    public  HttpURLConnection connection = null;
+    public HttpURLConnection connection = null;
 
+    public static String Url;
 
-
-    public String SendSeekerRequest (int x) {
+    public String SendSeekerRequest (double x, double y) {
 
         //Create connection
-        String request = "/update_seeker?x=" + x;
+        String request = "/update_servo?x=" + x + "&y=" + y;
 
         try {
             //urli asemele peab sisestama nutiroboti IP:PORT
-            URL url = new URL("http://192.168.1.64:8080" + request);
+            URL url = new URL ("http://" + Url + request);
+            return PostRequest(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String SendSensorRequest () {
+        String request = "/get_sensor";
+        try {
+            URL url = new URL ("http://" + Url + request);
             return PostRequest(url);
         } catch (Exception e) {
             e.printStackTrace();
@@ -33,6 +44,7 @@ public class HttpRequest {
 
     private String PostRequest (URL url) {
         try {
+            System.out.println("Try to contact url: " + url);
             connection = (HttpURLConnection) url.openConnection();
 
             connection.setRequestMethod("POST");
@@ -80,8 +92,7 @@ public class HttpRequest {
                 request = "/update_LED?x=0";
             }
         try {
-            //urli asemele peab sisestama nutiroboti IP:PORT
-            URL url = new URL("http://192.168.1.64:8080" + request);
+            URL url = new URL("http://" + Url + request);
             return PostRequest(url);
         } catch (Exception e) {
             e.printStackTrace();

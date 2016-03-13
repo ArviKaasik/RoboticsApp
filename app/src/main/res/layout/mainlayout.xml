@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    tools:context="com.app.robotics.roboticsapp.MainActivity"
+    tools:showIn="@layout/activity_main2">
+
+    <LinearLayout
+        android:id="@+id/list_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ToggleButton
+                android:id="@+id/toggBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sensor_label"
+                android:text="Distance: "
+                android:layout_gravity="center_vertical"
+                />
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sensor_value"
+                android:layout_toRightOf="@+id/sensor_label"
+                android:layout_gravity="center_vertical"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Get"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:id="@+id/sensor_get_value"/>
+        </RelativeLayout>
+
+        <com.jmedeisis.bugstick.Joystick
+            android:id="@+id/joystick"
+            android:layout_width="200dip"
+            android:layout_height="200dip"
+            android:layout_gravity="center_horizontal"
+            app:start_on_first_touch="true"
+            app:force_square="false"
+            android:background="@drawable/round_bg">
+
+            <!-- You may use any View here. -->
+            <View
+                android:layout_width="80dip"
+                android:layout_height="80dip"
+                android:background="@drawable/round_stick" />
+
+        </com.jmedeisis.bugstick.Joystick>
+    </LinearLayout>
+
+</LinearLayout>

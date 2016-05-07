@@ -47,6 +47,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/open_video_btn"
                 android:layout_toEndOf="@+id/open_video_btn" />
+
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"

@@ -33,6 +33,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
 import java.net.URI;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    updateSensorValue(false);
+                    updateSensorValue (false);
                     return true;
                 }
                 return false;
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void createConnectionAlert() {
+    private void createConnectionAlert () {
         LayoutInflater li = LayoutInflater.from(MainActivity.this);
         View connectionChoiceView = li.inflate(R.layout.url_prompt, null);
 
@@ -138,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText urlText = (EditText) connectionChoiceView.findViewById(R.id.change_url_edit);
 
         urlText.setText("192.168.1.125:");
+
         urlConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
         urlAlert = alertBuilder.create();
     }
 
@@ -173,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (sensorPeriod.isChecked()) {
-                    setSensorMode(SENSOR_TYPE_SEND_PERIODICALLY);
+                    setSensorMode (SENSOR_TYPE_SEND_PERIODICALLY);
                 } else if (sensorButton.isChecked()) {
                     setSensorMode(SENSOR_TYPE_SEND_WITH_BUTTON);
                 } else if (sensorNoSend.isChecked()) {
@@ -233,12 +234,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setSensorMode(int sensorMode) {
+    private void setSensorMode (int sensorMode) {
         SELECTED_SENSOR_TYPE = sensorMode;
         changeSensorUI();
     }
 
-    private void changeSensorUI() {
+    private void changeSensorUI () {
         if (SELECTED_SENSOR_TYPE == SENSOR_TYPE_SEND_WITH_BUTTON) {
             requestSensorValueButton.setVisibility(View.VISIBLE);
             timer.cancel();
@@ -253,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         updateSensorValue(true);
     }
 
-    private void updateSensorValue(boolean empty) {
+    private void updateSensorValue (boolean empty) {
         final AppCompatTextView sensorValueView = (AppCompatTextView) findViewById(R.id.sensor_value);
         if (empty) {
             sensorValueView.setText("");
@@ -275,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setupTimer() {
+    private void setupTimer () {
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

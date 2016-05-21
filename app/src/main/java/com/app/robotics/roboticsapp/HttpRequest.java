@@ -14,34 +14,38 @@ import java.net.URL;
  */
 public class HttpRequest {
 
-    public static int commandport = 8080;
-    public static int videoport = 5000;
+    public static int commandport = 8080; // käskude port
+    public static int videoport = 5000; // video edastamise port
 
     public HttpURLConnection connection = null;
 
-    public static String Url;
-
+    public static String Url; // kasutuses olev URL, formaadis: "192.168.1.222:"
+    // juhtkangi meetod
     public String SendSeekerRequest (double x, double y) {
 
-        //Create connection
+        //loome urli järgse teksti, mida kasutatakse päringu tüübi jaoks.
         String request = "/update_servo?x=" + x + "&y=" + y;
 
         try {
-            //urli asemele peab sisestama roboti IP:PORT
             URL url = new URL ("http://" + Url + commandport + request);
-            return PostRequest(url);
+            return PostRequest(url); // päringu tegemise meetod
         } catch (Exception e) {
+            // vea puhul püüame selle, android studioga ühendatud rakendusel näeme eelnevalt välja
+            // kutsutud meetodeid ning saame viga jälitada
             e.printStackTrace();
             return null;
         }
     }
 
     public String SendSensorRequest () {
+        // anduri päring
         String request = "/get_sensor";
         try {
             URL url = new URL ("http://" + Url + commandport + request);
-            return PostRequest(url);
+            return PostRequest(url); // päringu tegemise meetod
         } catch (Exception e) {
+            // vea puhul püüame selle, android studioga ühendatud rakendusel näeme eelnevalt välja
+            // kutsutud meetodeid ning saame viga jälitada
             e.printStackTrace();
             return null;
         }
@@ -49,21 +53,22 @@ public class HttpRequest {
 
     private String PostRequest (URL url) {
         try {
-            System.out.println("Try to contact url: " + url);
+            // ühenduse loomine
             connection = (HttpURLConnection) url.openConnection();
 
+            // päringu päis
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "text/html");
 
             connection.setUseCaches(false);
             connection.setDoOutput(true);
-            //Send request
+            // päringu saatmine
 
             DataOutputStream wr = new DataOutputStream (
                     connection.getOutputStream());
             wr.close();
 
-            //Get Response
+            // wastuse saamine
 
             InputStream is = connection.getInputStream();
             BufferedReader rd = new BufferedReader(new InputStreamReader(is));
@@ -76,6 +81,7 @@ public class HttpRequest {
                 response.append('\r');
             }
             rd.close();
+            // tagastame päringu vastuse
             return response.toString();
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,9 +94,9 @@ public class HttpRequest {
     }
 
     public String SendSwitchRequest (boolean OnOff){
-            //Create connection
             String request = "";
 
+            // sisse_välja lülitamise päring
             if (OnOff) {
                 request = "/update_LED?x=1";
             } else {
@@ -100,6 +106,8 @@ public class HttpRequest {
             URL url = new URL("http://" + Url + commandport + request);
             return PostRequest(url);
         } catch (Exception e) {
+            // vea puhul püüame selle, android studioga ühendatud rakendusel näeme eelnevalt välja
+            // kutsutud meetodeid ning saame viga jälitada
             e.printStackTrace();
             return null;
         }
